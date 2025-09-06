@@ -2,7 +2,6 @@
 *.pdf
 *.txt
 *.log
-*.jpg
 *.jpeg
 *.png
 *.csv
@@ -24,4 +23,7 @@
 *.log"__pycache__/"
 "*.pyc"
 "*.log"
-*.__init__
+
+*.__init__.py
+
+.env
