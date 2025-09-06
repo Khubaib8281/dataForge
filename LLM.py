@@ -296,7 +296,7 @@ def explain_plot(vis_metadata, df_metadata):
 
     json_str = match.group(0)
 
-    try:`
+    try:
         explanation = json.loads(json_str)
     except json.JSONDecodeError:
         explanation = {"what_it_shows": [text], "key_insights": [], "how_to_use": []}
