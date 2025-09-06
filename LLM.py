@@ -5,56 +5,15 @@ import re
 import os
 import json
 
-load_dotenv()
+# load_dotenv()
 
 # Get the API key
-api_key = os.getenv("GEMINI_API_KEY")
-    
+# api_key = os.getenv("GEMINI_API_KEY")
+api_key = st.secrets["GEMINI_API_KEY"]
 # Configure
 genai.configure(api_key=api_key)
 
 model = genai.GenerativeModel("gemini-2.0-flash")
-
-# def llm_response(df: pd.DataFrame):
-#     schema_info = df.dtypes.to_dict()
-#     missing_info = df.isna().sum().to_dict()
-#     sample_data = df.sample(min(len(df), 20), random_state=42).to_dict()
-
-#     prompt = f"""
-#     I have a dataset with the following information:
-
-#     Column data types:
-#     {schema_info}
-
-#     Missing value counts:
-#     {missing_info}
-
-#     Sample rows:
-#     {sample_data}
-
-#     Instructions:
-#     - Write ONLY Python code that cleans the entire DataFrame `df`.
-#     - Do NOT subset the DataFrame using head(), tail(), sample(), or similar — cleaning must apply to all rows.
-#     - Correct data types where possible (convert datetime columns, numeric columns, etc.).
-#     - Fill missing values (mean/median for numeric, mode for categorical, etc.).
-#     - Remove duplicates if any.
-#     - The last line must be: `df_cleaned = df`
-#     - Assume pandas is imported as pd, numpy as np.
-#     - Do not print anything, do not create fake data.
-#     - Do not create a new DataFrame.
-#     """
-
-    
-#     response = model.generate_content(prompt)
-
-#     # Extract code between triple backticks if present
-#     code_blocks = re.findall(r"```(?:python)?\n(.*?)```", response.text, re.DOTALL)
-#     if code_blocks:
-#         return code_blocks[0].strip()
-#     else:
-#         # No code fences — return raw but stripped text
-#         return response.text.strip()
-
 
 def llm_response(df: pd.DataFrame, recommendations: list):
     schema_info = df.dtypes.to_dict()
@@ -106,42 +65,6 @@ def llm_response(df: pd.DataFrame, recommendations: list):
 
  
 
-# def check_data_quality(df):
-#     schema_info = {col: str(dtype) for col, dtype in df.dtypes.items()}
-#     sample_rows = df.head(3).to_dict(orient="records")
-#     null_counts = df.isnull().sum().to_dict()
-#     basic_stats = df.describe(include="all").to_dict()
-
-#     llm_prompt = f"""
-#     You are a data quality checker.
-#     Dataset schema: {schema_info}
-#     Sample rows: {sample_rows}
-#     Missing values: {null_counts}   
-#     Stats: {basic_stats}
-
-#     Analyze the dataset and tell:
-#     1. Does this dataset need cleaning? (yes/no)
-#     2. If yes, list specific issues found (e.g., missing values, wrong datatypes, duplicates).
-#     3. Identify issues like inconsistent categories, spelling variations, or invalid entries.
-#     4. Do NOT recommend changing values that are already valid and consistent.
-#     5. Recommend mappings only when you detect clear duplicates (e.g., "navy blue" and "dark blue" → "blue").
-#     6. If a value looks valid but unfamiliar (e.g., a rare city name), mark it as "unverified" instead of forcing a mapping.
-#     7. Suggest cleaning actions in plain English.
-    
-#     Respond in JSON format:   
-#     {{
-#       "needs_cleaning": true/false,
-#       "issues": [...],
-#       "recommendations": [...]
-#     }}
-#     """
-#     response = model.generate_content(llm_prompt)          
-#     return response.text
-
-
-import re
-import json
-
 def check_data_quality(df):
     schema_info = {col: str(dtype) for col, dtype in df.dtypes.items()}
     sample_rows = df.head(3).to_dict(orient="records")
@@ -179,7 +102,7 @@ def check_data_quality(df):
     match = re.search(r"\{.*\}", raw_text, re.DOTALL)
     if match:
         try:
-            return json.loads(match.group())  # ✅ Always return dict
+            return json.loads(match.group())  #  Always return dict
         except json.JSONDecodeError:
             return {
                 "needs_cleaning": False,
