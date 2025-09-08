@@ -104,12 +104,18 @@ streamlit run app.py
 
 ## 📜 License
 
-This project is licensed under the MIT License.
+All Rights Reserved.
+
+This project and its source code are proprietary and confidential.  
+No part of this project may be copied, modified, distributed, or used  
+without explicit written permission from the author.  
+
+© 2025 Muhammad Khubaib Ahmad. All rights reserved.
+
 
 ------------------------------------------------------------------------
 
-## 👨‍💻 Author
+## 👨‍💻 Author   
 
-Developed by [Muhammad Khubaib
-Ahmad](https://www.linkedin.com/in/muhammad-khubaib-ahmad-)\
+Developed by [Muhammad Khubaib Ahmad](https://www.linkedin.com/in/muhammad-khubaib-ahmad-)\
 **AI/ML Engineer & Data Scientist**
